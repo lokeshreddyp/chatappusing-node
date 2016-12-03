@@ -16,6 +16,28 @@ app.use(express.static(publicpath));
 io.on('connect',(socket) => {
 console.log("hello new user is connected using connect method");
 
+//sending data from server to client
+socket.emit('newEmail' , {
+  From : "lokesh@gmail.com",
+  text : "hai wassup man!!",
+   CreatedAt : 123
+ });
+
+
+socket.emit('newmessageEvent', {
+  From : "lokesh@message.com",
+  text : "Meet me at 6 pm!!",
+   CreatedAt : 123
+});
+
+//
+socket.on('CreateEmail', (serverreceive)=> {
+  console.log('new mail created',serverreceive);
+})
+
+socket.on('createmessageEvent' , (listeningcreate_messageevent) => {
+console.log('listeningcreate_messageevent' ,listeningcreate_messageevent);
+});
 
 //disconnects with client ..when browser is closed
 socket.on('disconnect',() => {
