@@ -5,17 +5,17 @@ var socket = io();
 socket.on('connect', function(){
 console.log('connected to server');
 
-socket.emit('CreateEmail' ,  {
-to : "LokeshReddy@abc.com",
-text : "hello im going to server"
+// socket.emit('CreateEmail' ,  {
+// to : "LokeshReddy@abc.com",
+// text : "hello im going to server"
+//
+// });
 
-});
-
-//emiting create message to from client to server
-socket.emit('createmessageEvent', {
-  from : "hey this is creating message event",
-  text : "Server listens me!!!"
-});
+// //emiting create message to from client to server
+// socket.emit('createmessageEvent', {
+//   from : "hey this is creating message event",
+//   text : "Server listens me!!!"
+// });
 
 });
 
