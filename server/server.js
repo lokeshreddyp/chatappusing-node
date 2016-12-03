@@ -5,6 +5,8 @@ const socketIo = require('socket.io');
 const http = require('http');
 const express = require('express');
 
+const {generateMessage} = require('./utils/message');
+
 const port = process.env.PORT || 3000;
 var app = express();
 var server = http.createServer(app);
@@ -23,18 +25,10 @@ console.log("hello new user is connected using connect method");
 //    CreatedAt : 123
 //  });
 
-socket.emit('newmessageEvent' , {
-from : 'Admin' ,
-text : 'welcome to chat app',
-  createdAt : new Date().getTime()
-});
+socket.emit('newmessageEvent' , generateMessage('Admin','Welcome to chat App'));
 
 
-socket.broadcast.emit('newmessageEvent' , {
-  from : 'Admin' ,
-  text : 'New User has joined',
-  createdAt : new Date().getTime()
-})
+socket.broadcast.emit('newmessageEvent' , generateMessage('Admin','New User has joined'));
 // socket.emit('newmessageEvent', {
 //   From : "lokesh@message.com",
 //   text : "Meet me at 6 pm!!",
@@ -52,17 +46,16 @@ console.log('listeningcreate_messageevent' ,listeningcreate_messageevent);
 //when we type socket.emit('createmessageEvent' , {x : 'plr' , y : 'hehe it worked!!'}); then it will be displayed
 //to all the connections even i
 //x and y are valued passed as arguments fromcreatemessageEvent
-socket.broadcast.emit('newmessageEvent' , {
-  from : listeningcreate_messageevent.x,
-  text : listeningcreate_messageevent.y,
-   CreatedAt : new Date().getTime()
-});
+
+
+
+io.emit('newmessageEvent' , generateMessage(listeningcreate_messageevent.x,listeningcreate_messageevent.y)
 });
 
 //disconnects with client ..when browser is closed
 socket.on('disconnect',() => {
   console.log('browser is closed!!!');
-})
+});
 });
 
 server.listen(port, () => {
